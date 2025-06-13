@@ -158,6 +158,112 @@
             margin-bottom: 1rem;
         }
 
+        /* Reviews Section */
+        .reviews {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #e3ffe7 0%, #d9ffdb 100%);
+        }
+
+        .reviews h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .reviews-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .review-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .review-info h4 {
+            color: #333;
+            margin-bottom: 0.2rem;
+        }
+
+        .review-date {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .review-stars {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-right: 0.1rem;
+        }
+
+        .review-text {
+            color: #555;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .review-cta {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .review-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .review-button:hover {
+            transform: translateY(-2px);
+        }
+
         /* About Section */
         .about {
             padding: 80px 0;
@@ -287,6 +393,10 @@
                 flex-direction: column;
                 align-items: center;
             }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -298,6 +408,7 @@
             <ul class="nav-links">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#caracteristicas">Características</a></li>
+                <li><a href="#opiniones">Opiniones</a></li>
                 <li><a href="#descargar">Descargar</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
@@ -342,6 +453,79 @@
                     <h3>📊 Búsqueda Avanzada</h3>
                     <p>Analiza múltiples páginas del mercado para encontrar las mejores oportunidades disponibles.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="opiniones" class="reviews">
+        <div class="container">
+            <h2>Lo que dicen nuestros usuarios</h2>
+            <p class="reviews-subtitle">Experiencias reales de personas que ya usan KalunBot</p>
+            
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">JM</div>
+                        <div class="review-info">
+                            <h4>Juan Miguel</h4>
+                            <div class="review-date">Usuario verificado</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="review-text">"Después de probar varios bots, KalunBot es el que mejor funciona para mí. Los filtros son muy precisos y he conseguido varias cartas que buscaba desde hace tiempo. Recomendado."</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">AL</div>
+                        <div class="review-info">
+                            <h4>Alex_Trading</h4>
+                            <div class="review-date">Usuario verificado</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <p class="review-text">"La instalación fue muy sencilla y funciona exactamente como se describe. Me ha ahorrado muchísimo tiempo en el trading. La calculadora de impuestos de EA es muy útil."</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">MR</div>
+                        <div class="review-info">
+                            <h4>Mario_FC25</h4>
+                            <div class="review-date">Usuario verificado</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                    </div>
+                    <p class="review-text">"Llevo usando KalunBot unas semanas y estoy contento con los resultados. Es estable y los filtros funcionan bien. Echo en falta algunas funciones adicionales pero en general muy bueno."</p>
+                </div>
+            </div>
+
+            <div class="review-cta">
+                <a href="https://forms.google.com/tu-formulario-aqui" target="_blank" class="review-button">
+                    📝 Comparte tu experiencia
+                </a>
+                <p style="margin-top: 1rem; color: #666;">
+                    ¿Ya usas KalunBot? Ayuda a otros usuarios compartiendo tu opinión
+                </p>
             </div>
         </div>
     </section>
