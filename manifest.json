@@ -1,0 +1,73 @@
+{
+  "name": "KalunBot",
+  "short_name": "KalunBot",
+  "description": "El bot de sniping #1 para EA FC 25. Automatiza tu trading y consigue las mejores cartas del mercado.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "games",
+    "sports",
+    "utilities"
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "KalunBot Interface Desktop"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "KalunBot Mobile View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Descargar",
+      "short_name": "Descargar",
+      "description": "Descargar KalunBot",
+      "url": "/#download",
+      "icons": [
+        {
+          "src": "/download-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Guía",
+      "short_name": "Guía",
+      "description": "Guía de instalación",
+      "url": "/guia-instalacion.html",
+      "icons": [
+        {
+          "src": "/guide-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KalunBot - El Bot de Sniping #1 para EA FC 25</title>
+    <meta name="description" content="Automatiza tu trading en EA FC 25 con KalunBot. Consigue las mejores cartas al mejor precio con el bot de sniping más rápido del mercado.">
+    <meta name="keywords" content="bot EA FC 25, sniping bot fifa, autotrader EA FC, trading bot fifa, KalunBot">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="author" content="KalunBot Team">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Spanish">
+    <link rel="canonical" href="https://tu-dominio.com/">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="KalunBot - El Bot de Sniping #1 para EA FC 25">
+    <meta property="og:description" content="Automatiza tu trading en EA FC 25 con KalunBot. Consigue las mejores cartas al mejor precio con el bot de sniping más rápido del mercado.">
+    <meta property="og:image" content="https://tu-dominio.com/og-image.png">
+    <meta property="og:url" content="https://tu-dominio.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="KalunBot">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KalunBot - El Bot de Sniping #1 para EA FC 25">
+    <meta name="twitter:description" content="Automatiza tu trading en EA FC 25 con KalunBot. Consigue las mejores cartas al mejor precio.">
+    <meta name="twitter:image" content="https://tu-dominio.com/twitter-image.png">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="KalunBot">
+    
+    <!-- Links -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/icon-192x192.png">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        .hero .problem {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        .cta-button {
+            background: #ff6b6b;
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 16px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .secondary-button:hover {
+            background: white;
+            color: #667eea;
+        }
+        
+        .benefits {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .benefit {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .benefit h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .features {
+            padding: 80px 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .feature {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .feature p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .target-audience {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .audience-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .audience-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        
+        .story {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .story-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .story h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .download {
+            padding: 80px 0;
+            text-align: center;
+            background: #fff;
+        }
+        
+        .download-info {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem auto;
+            max-width: 600px;
+        }
+        
+        .faq {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .faq-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .faq-answer {
+            padding: 1.5rem;
+            color: #666;
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+        
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stats {
+            background: white;
+            padding: 60px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .secondary-button {
+                display: block;
+                margin: 1rem auto 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">KalunBot</div>
+            <ul class="nav-links">
+                <li><a href="#features">Características</a></li>
+                <li><a href="#story">Historia</a></li>
+                <li><a href="#download">Descargar</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>El Bot de Sniping #1 para EA FC 25</h1>
+            <p class="subtitle">Automatiza tu trading y consigue las mejores cartas al mejor precio</p>
+            <p class="problem">¿Cansado de perder cartas por milisegundos? ¿Sin tiempo para hacer trading manual?</p>
+            <a href="#download" class="cta-button">Descargar Gratis</a>
+            <a href="#story" class="secondary-button">Ver Demo</a>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">¿Por qué KalunBot?</h2>
+            <div class="benefits-grid">
+                <div class="benefit">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Gana Más Monedas</h3>
+                    <p>Consigue cartas a precios que jamás encontrarías manualmente</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">⏰</div>
+                    <h3>Ahorra Tiempo</h3>
+                    <p>El bot trabaja 24/7 mientras tú haces otras cosas</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Precisión Extrema</h3>
+                    <p>Velocidad de 0.001 segundos en modo Sport</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">🛡️</div>
+                    <h3>100% Seguro</h3>
+                    <p>Tecnología anti-detección avanzada</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">0.001s</div>
+                    <div class="stat-label">Velocidad de Sniping</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Funcionamiento Continuo</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Automatizado</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Cartas Disponibles</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Características Principales</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Modo Sport Ultra-Rápido</h3>
+                    <p>Primera búsqueda a 0.01s, posteriores a 0.001s. La velocidad más extrema del mercado para sniping profesional.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Filtros Inteligentes</h3>
+                    <p>Filtra por jugador específico, calidad, rareza, y rangos de precio. Encuentra exactamente lo que buscas.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <h3>Calculadora EA Tax</h3>
+                    <p>Calcula automáticamente el 5% de EA y muestra tus ganancias reales. En rojo las pérdidas, en verde las ganancias.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h3>Estadísticas en Tiempo Real</h3>
+                    <p>Monitorea búsquedas realizadas, compras exitosas, ratio de éxito, tiempo transcurrido y monedas gastadas.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Auto-Recovery Inteligente</h3>
+                    <p>Se recupera automáticamente de errores, recarga páginas, reaplica filtros y evita bucles infinitos.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Búsqueda de Precios Avanzada</h3>
+                    <p>Analiza el mercado iterativamente para encontrar los 5 precios más baratos reales de cualquier carta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience -->
+    <section class="target-audience">
+        <div class="container">
+            <h2 class="section-title">¿Para Quién es KalunBot?</h2>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <h4>👔 Trabajadores Ocupados</h4>
+                    <p>Tienes poco tiempo pero quieres un buen equipo. KalunBot trabaja mientras tú trabajas.</p>
+                </div>
+                <div class="audience-card">
+                    <h4>🎮 Content Creators</h4>
+                    <p>Necesitas equipos competitivos para tus videos y streams. Automatiza el trading y enfócate en el contenido.</p>
+                </div>
+                <div class="audience-card">
+                    <h4>💎 Traders Activos</h4>
+                    <p>Conoces el mercado pero quieres maximizar tu eficiencia. Multiplica tus ganancias con velocidad extrema.</p>
+                </div>
+                <div class="audience-card">
+                    <h4>🏆 Jugadores Competitivos</h4>
+                    <p>FUT Champions y Division Rivals altas. Necesitas ventaja competitiva para conseguir las mejores cartas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story -->
+    <section id="story" class="story">
+        <div class="container">
+            <div class="story-content">
+                <h2>La Historia de KalunBot</h2>
+                <div class="story-text">
+                    <p><strong>"De Frustración Personal a Solución Global"</strong></p>
+                    <br>
+                    <p>Todo comenzó como un simple proyecto personal. Como jugador activo de EA FC 25, me frustraba constantemente perder cartas por milisegundos en el mercado. Pasaba horas haciendo sniping manual, solo para ver cómo otros usuarios conseguían las mejores ofertas antes que yo.</p>
+                    <br>
+                    <p>Decidí aplicar mis conocimientos de programación para resolver MI problema. Cuando vi los resultados - conseguir cartas que jamás hubiera podido obtener manualmente, ganar millones de monedas mientras dormía - me di cuenta de que esto podía cambiar la experiencia de muchos otros jugadores.</p>
+                    <br>
+                    <p><strong>"Lo que empezó como frustración personal, se convirtió en la herramienta que cambia la forma de hacer trading en EA FC 25."</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download -->
+    <section id="download" class="download">
+        <div class="container">
+            <h2 class="section-title">Descarga KalunBot</h2>
+            <p>Únete a miles de usuarios que ya están automatizando su trading</p>
+            
+            <div class="download-info">
+                <h3>Versión 1.0 - Gratis</h3>
+                <p><strong>Requisitos del Sistema:</strong></p>
+                <ul style="text-align: left; margin: 1rem 0;">
+                    <li>Windows 10/11 (64-bit)</li>
+                    <li>4GB RAM mínimo</li>
+                    <li>Conexión a Internet estable</li>
+                    <li>Google Chrome instalado</li>
+                </ul>
+                <p><strong>Tamaño:</strong> ~50MB | <strong>Última actualización:</strong> Junio 2025</p>
+            </div>
+            
+            <a href="https://github.com/tu-usuario/kalunbot/releases/latest/download/KalunBotSetup.exe" class="cta-button">
+                Descargar KalunBot Gratis
+            </a>
+            
+            <p style="margin-top: 2rem; color: #666; font-size: 0.9rem;">
+                ✅ Sin virus | ✅ Sin spyware | ✅ Actualizaciones automáticas<br>
+                ⚡ Instalación en 30 segundos | 🛡️ 100% seguro
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Es seguro usar KalunBot?</div>
+                <div class="faq-answer">
+                    Sí, KalunBot utiliza tecnología anti-detección avanzada que simula comportamiento humano. Miles de usuarios lo usan diariamente sin problemas. Además, no requiere acceso a tu cuenta, solo automatiza las acciones en el navegador.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Funciona en todas las versiones de EA FC 25?</div>
+                <div class="faq-answer">
+                    KalunBot está optimizado para la Web App de EA FC 25 y se actualiza automáticamente cuando EA realiza cambios. Compatible con todas las ligas y mercados regionales.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Necesito conocimientos técnicos?</div>
+                <div class="faq-answer">
+                    No. KalunBot tiene una interfaz muy intuitiva. Solo necesitas configurar los filtros de búsqueda (jugador, precio, etc.) y presionar "Iniciar". El bot hace todo el trabajo automáticamente.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Cuál es la diferencia entre modo Normal y Sport?</div>
+                <div class="faq-answer">
+                    El modo Normal tiene delays de 1.2-1.7s, ideal para uso casual. El modo Sport tiene delays de 0.01s en la primera búsqueda y 0.001s en las siguientes, diseñado para sniping profesional de alta velocidad.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿El bot puede listar cartas automáticamente?</div>
+                <div class="faq-answer">
+                    Sí. Después de comprar una carta, KalunBot puede automáticamente listarla en el mercado con los precios que configures, o enviarla a la lista de transferibles. Todo automático.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">¿Hay límite de uso?</div>
+                <div class="faq-answer">
+                    No hay límites artificiales en KalunBot. Puedes configurar cuántas cartas quieres comprar antes de que se detenga automáticamente. El único límite son tus monedas en el juego.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>KalunBot</h4>
+                    <p>El bot de trading más avanzado para EA FC 25. Automatiza tu sniping y consigue las mejores cartas del mercado.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <a href="#download">Descargar</a>
+                    <a href="#features">Características</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="https://github.com/tu-usuario/kalunbot">GitHub</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Soporte</h4>
+                    <a href="mailto:soporte@kalunbot.com">Contacto</a>
+                    <a href="https://discord.gg/kalunbot">Discord</a>
+                    <a href="https://www.trustpilot.com/review/tu-dominio.com">Reviews</a>
+                    <a href="/guia-instalacion.html">Guía de Instalación</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="/terminos.html">Términos de Uso</a>
+                    <a href="/privacidad.html">Política de Privacidad</a>
+                    <a href="/disclaimer.html">Disclaimer</a>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid #555; padding-top: 2rem; margin-top: 2rem;">
+                <p>&copy; 2025 KalunBot. Todos los derechos reservados.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #888;">
+                    EA FC 25 es una marca registrada de Electronic Arts Inc. KalunBot no está afiliado con EA.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling para los enlaces
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // FAQ interactivo
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                const isOpen = answer.style.display === 'block';
+                
+                // Cerrar todas las respuestas
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    ans.style.display = 'none';
+                });
+                
+                // Abrir/cerrar la seleccionada
+                if (!isOpen) {
+                    answer.style.display = 'block';
+                }
+            });
+        });
+
+        // Tracking de eventos (Google Analytics)
+        function trackDownload() {
+            // Aquí puedes añadir tu código de Google Analytics
+            console.log('Download tracked');
+        }
+
+        // Añadir tracking al botón de descarga
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', trackDownload);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+User-agent: *
+Allow: /
+
+# Archivos importantes
+Allow: /index.html
+Allow: /guia-instalacion.html
+Allow: /sitemap.xml
+
+# Bloquear archivos innecesarios para SEO
+Disallow: /README.md
+Disallow: /*.log
+Disallow: /backups/
+Disallow: /temp/
+Disallow: /test/
+
+# Sitemap
+Sitemap: https://tu-dominio.com/sitemap.xml
+
+# Instrucciones específicas para bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Bloquear bots maliciosos conocidos
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
