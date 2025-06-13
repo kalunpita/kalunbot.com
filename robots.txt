@@ -14,7 +14,7 @@ Disallow: /temp/
 Disallow: /test/
 
 # Sitemap
-Sitemap: https://tu-dominio.com/sitemap.xml
+Sitemap: https://kalunpita.github.io/kalunbot.com/sitemap.xml
 
 # Instrucciones específicas para bots
 User-agent: Googlebot
