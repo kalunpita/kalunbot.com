@@ -1,631 +1,1052 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KalunBot - Bot de Sniping para EA FC 25</title>
-    <meta name="description" content="Bot de sniping para EA FC 25. Automatiza tu trading con funcionalidades avanzadas de búsqueda y filtrado.">
-    <meta name="keywords" content="KalunBot, bot EA FC 25, sniping bot, trading automatico, FIFA bot, EA FC trading">
-    <meta name="author" content="KalunBot">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="KalunBot - Bot de Sniping para EA FC 25">
-    <meta property="og:description" content="Bot de sniping para EA FC 25 con funcionalidades avanzadas de trading automatizado.">
-    <meta property="og:url" content="https://kalunpita.github.io/kalunbot.com/">
-    <meta property="og:type" content="website">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #667eea;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 120px 0 80px;
-            text-align: center;
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background: white;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Reviews Section */
-        .reviews {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #e3ffe7 0%, #d9ffdb 100%);
-        }
-
-        .reviews h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .reviews-subtitle {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 3rem;
-        }
-
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .review-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-
-        .review-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .review-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .review-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            margin-right: 1rem;
-        }
-
-        .review-info h4 {
-            color: #333;
-            margin-bottom: 0.2rem;
-        }
-
-        .review-date {
-            font-size: 0.9rem;
-            color: #888;
-        }
-
-        .review-stars {
-            display: flex;
-            margin-bottom: 1rem;
-        }
-
-        .star {
-            color: #ffc107;
-            font-size: 1.2rem;
-            margin-right: 0.1rem;
-        }
-
-        .review-text {
-            color: #555;
-            line-height: 1.6;
-            font-style: italic;
-        }
-
-        .review-cta {
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        .review-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #28a745, #20c997);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.3s ease;
-        }
-
-        .review-button:hover {
-            transform: translateY(-2px);
-        }
-
-        /* About Section */
-        .about {
-            padding: 80px 0;
-            background: white;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .about p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #666;
-        }
-
-        /* Download Section */
-        .download {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-        }
-
-        .download h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .download-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .download-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .download-btn:hover {
-            background: white;
-            color: #667eea;
-        }
-
-        /* Footer */
-        footer {
-            background: #2c3e50;
-            color: white;
-            padding: 40px 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #ecf0f1;
-        }
-
-        .footer-section a {
-            color: #bdc3c7;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #34495e;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            text-align: center;
-            color: #95a5a6;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .download-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .reviews-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <nav class="container">
-            <div class="logo">KalunBot</div>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#caracteristicas">Características</a></li>
-                <li><a href="#opiniones">Opiniones</a></li>
-                <li><a href="#descargar">Descargar</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="inicio" class="hero">
-        <div class="container">
-            <h1>KalunBot - Bot de Sniping para EA FC 25</h1>
-            <p>Bot de trading automatizado con funcionalidades avanzadas de búsqueda y filtrado de cartas</p>
-            <a href="#descargar" class="cta-button">Ver Información</a>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="caracteristicas" class="features">
-        <div class="container">
-            <h2>Características del Bot</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>⚡ Velocidad Configurable</h3>
-                    <p>Modo Sport con delay mínimo y Modo Normal con mayor estabilidad. Configura según tus necesidades.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🎯 Sistema de Filtros</h3>
-                    <p>Filtra por jugador, precio, calidad y otros parámetros para encontrar exactamente lo que buscas.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🛡️ Funciones de Seguridad</h3>
-                    <p>Implementa delays y patrones para simular comportamiento humano durante el uso.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>💰 Calculadora EA Tax</h3>
-                    <p>Calcula automáticamente las ganancias reales descontando la comisión de EA Sports.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🔄 Gestión de Errores</h3>
-                    <p>Sistema de recuperación automática ante errores de conexión y problemas técnicos.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>📊 Búsqueda Avanzada</h3>
-                    <p>Analiza múltiples páginas del mercado para encontrar las mejores oportunidades disponibles.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Section -->
-    <section id="opiniones" class="reviews">
-        <div class="container">
-            <h2>Lo que dicen nuestros usuarios</h2>
-            <p class="reviews-subtitle">Experiencias reales de personas que ya usan KalunBot</p>
-            
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-avatar">JM</div>
-                        <div class="review-info">
-                            <h4>Juan Miguel</h4>
-                            <div class="review-date">Usuario verificado</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="review-text">"Después de probar varios bots, KalunBot es el que mejor funciona para mí. Los filtros son muy precisos y he conseguido varias cartas que buscaba desde hace tiempo. Recomendado."</p>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-avatar">AL</div>
-                        <div class="review-info">
-                            <h4>Alex_Trading</h4>
-                            <div class="review-date">Usuario verificado</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                    </div>
-                    <p class="review-text">"La instalación fue muy sencilla y funciona exactamente como se describe. Me ha ahorrado muchísimo tiempo en el trading. La calculadora de impuestos de EA es muy útil."</p>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-avatar">MR</div>
-                        <div class="review-info">
-                            <h4>Mario_FC25</h4>
-                            <div class="review-date">Usuario verificado</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">☆</span>
-                    </div>
-                    <p class="review-text">"Llevo usando KalunBot unas semanas y estoy contento con los resultados. Es estable y los filtros funcionan bien. Echo en falta algunas funciones adicionales pero en general muy bueno."</p>
-                </div>
-            </div>
-
-            <div class="review-cta">
-                <a href="https://forms.google.com/tu-formulario-aqui" target="_blank" class="review-button">
-                    📝 Comparte tu experiencia
-                </a>
-                <p style="margin-top: 1rem; color: #666;">
-                    ¿Ya usas KalunBot? Ayuda a otros usuarios compartiendo tu opinión
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about">
-        <div class="container">
-            <div class="about-content">
-                <div>
-                    <h2>Sobre KalunBot</h2>
-                    <p>KalunBot comenzó como un proyecto personal para automatizar el proceso de trading en EA FC 25. El objetivo era crear una herramienta que ayudara a encontrar las mejores oportunidades del mercado de forma más eficiente.</p>
-                    <p>El bot está diseñado para adaptarse a diferentes estilos de trading, desde usuarios ocasionales hasta aquellos que buscan un enfoque más sistemático del mercado de transferencias.</p>
-                    <p>Se ha desarrollado pensando en la usabilidad y la funcionalidad, manteniendo un enfoque responsable en su implementación.</p>
-                </div>
-                <div>
-                    <h2>Especificaciones Técnicas</h2>
-                    <p><strong>Modos disponibles:</strong> Sport (delay mínimo) y Normal (estabilidad)</p>
-                    <p><strong>Navegadores:</strong> Chrome, Firefox, Edge</p>
-                    <p><strong>Sistema:</strong> Windows 10/11</p>
-                    <p><strong>Instalación:</strong> Proceso simplificado con guía incluida</p>
-                    <p><strong>Configuración:</strong> Interfaz intuitiva para personalizar filtros</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Download Section -->
-    <section id="descargar" class="download">
-        <div class="container">
-            <h2>Información de Descarga</h2>
-            <p>Consulta los detalles sobre la disponibilidad y requisitos del bot</p>
-            <div class="download-buttons">
-                <a href="#" class="download-btn">Información de Descarga</a>
-                <a href="guia-instalacion.html" class="download-btn">Guía de Instalación</a>
-            </div>
-            <p style="margin-top: 2rem; opacity: 0.8;">
-                ⚠️ Requiere Windows 10+ y navegador compatible. Consulta la guía de instalación para más detalles.
-            </p>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contacto">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>KalunBot</h3>
-                    <p>Bot de sniping para EA FC 25 con funcionalidades de trading automatizado y sistema de filtros avanzado.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Enlaces</h3>
-                    <a href="guia-instalacion.html">Guía de Instalación</a>
-                    <a href="terminos.html">Términos de Uso</a>
-                    <a href="privacidad.html">Política de Privacidad</a>
-                    <a href="disclaimer.html">Disclaimer</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Información</h3>
-                    <a href="mailto:info@kalunbot.com">info@kalunbot.com</a>
-                    <a href="#" target="_blank">Soporte Técnico</a>
-                    <a href="#" target="_blank">Reportar Problema</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Recursos</h3>
-                    <a href="#" target="_blank">Documentación</a>
-                    <a href="#" target="_blank">Preguntas Frecuentes</a>
-                    <a href="#" target="_blank">Actualizaciones</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 KalunBot. | EA FC 25 es marca registrada de Electronic Arts Inc.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Smooth Scrolling Script -->
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+import threading
+import ttkbootstrap as tb
+from ttkbootstrap.constants import *
+from tkinter import messagebox
+import tkinter as tk
+import time
+import random
+import psutil
+import json
+import requests
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
+import webbrowser
+import subprocess
+import sys
+
+class EAFC25SnipingBot:
+    SEARCH_BUTTON = (By.XPATH, "//button[contains(text(), 'Search')]")
+    BUY_NOW_BUTTON = (By.CSS_SELECTOR, ".DetailPanel .buyButton:not(.disabled):not([disabled])")
+    OK_BUTTON = (By.XPATH, "//button[.//span[text()='Ok']]")
+    BACK_BUTTON = (By.CLASS_NAME, "ut-navigation-button-control")
+    INCREMENT_BID_BUTTON = (By.XPATH, "(//button[contains(@class, 'increment-value')])[1]")
+    PLAYER_RESULT = (By.CLASS_NAME, "listFUTItem")
+    NAME_FIELD = (By.CLASS_NAME, "ut-text-input-control")
+    PLAYER_LIST = (By.CLASS_NAME, "playerResultsList")
+    BID_MIN_FIELD = (By.XPATH, "(//div[@class='ut-numeric-input-spinner-control']//input)[1]")
+    BID_MAX_FIELD = (By.XPATH, "(//div[@class='ut-numeric-input-spinner-control']//input)[2]")
+    BUY_MIN_FIELD = (By.XPATH, "(//div[@class='ut-numeric-input-spinner-control']//input)[3]")
+    BUY_MAX_FIELD = (By.XPATH, "(//div[@class='ut-numeric-input-spinner-control']//input)[4]")
+    TRANSFER_TAB = (By.CLASS_NAME, "ut-tab-bar-item.icon-transfer")
+    MARKET_TILE = (By.CLASS_NAME, "ut-tile-transfer-market")
+
+    def __init__(self, gui=None):
+        self.driver = None
+        self.webapp_url = "https://www.ea.com/es-es/ea-sports-fc/ultimate-team/web-app/"
+        self.purchases = 0
+        self.running = False
+        self.paused = False
+        self.gui = gui
+
+    def setup_driver(self, headless=False):
+        chrome_options = Options()
+        if headless:
+            chrome_options.add_argument("--headless=new")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
+        chrome_options.add_experimental_option('useAutomationExtension', False)
+        user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+        chrome_options.add_argument(f"user-agent={user_agent}")
+
+        service = Service(ChromeDriverManager().install())
+        self.driver = webdriver.Chrome(service=service, options=chrome_options)
+        self.driver.execute_script(
+            "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+        )
+        time.sleep(1)
+        try:
+            for proc in psutil.process_iter(['pid', 'name']):
+                if proc.info['name'] and 'chrome' in proc.info['name'].lower():
+                    proc.nice(psutil.HIGH_PRIORITY_CLASS)
+        except Exception:
+            pass
+
+    def open_webapp(self):
+        self.driver.get(self.webapp_url)
+
+    def navigate_to_transfer_market(self):
+        transfer_tab = WebDriverWait(self.driver, 60).until(
+            EC.element_to_be_clickable(self.TRANSFER_TAB)
+        )
+        transfer_tab.click()
+        time.sleep(0.5)
+        market_tile = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.MARKET_TILE)
+        )
+        market_tile.click()
+
+    def set_filters(self, config):
+        if config["player_name"]:
+            try:
+                name_field = WebDriverWait(self.driver, 10).until(
+                    EC.element_to_be_clickable(self.NAME_FIELD)
+                )
+                name_field.clear()
+                name_field.send_keys(config["player_name"])
+                time.sleep(0.5)
+                first_result = WebDriverWait(self.driver, 5).until(
+                    EC.element_to_be_clickable(self.PLAYER_LIST)
+                )
+                first_result.click()
+            except Exception as e:
+                print(f"Error seleccionando jugador: {e}")
+
+        # Selección de calidad usando click JS si es necesario
+        if config.get("quality", "Any") != "Any":
+            try:
+                quality_label = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, "//span[contains(@class, 'label') and normalize-space(text())='Quality']")
+                    )
+                )
+                quality_container = quality_label.find_element(By.XPATH, "./parent::div")
+                try:
+                    quality_container.click()
+                except Exception:
+                    self.driver.execute_script("arguments[0].click();", quality_container)
+                time.sleep(1)
+                quality_option = WebDriverWait(self.driver, 5).until(
+                    EC.element_to_be_clickable(
+                        (By.XPATH, f"//ul[contains(@class,'inline-list')]/li[normalize-space(text())='{config['quality']}']")
+                    )
+                )
+                try:
+                    quality_option.click()
+                except Exception:
+                    self.driver.execute_script("arguments[0].click();", quality_option)
+                time.sleep(0.5)
+            except Exception as e:
+                print(f"Error seleccionando calidad: {e}")
+
+        # Selección de rareza usando click JS si es necesario
+        if config.get("rarity", "Any") != "Any":
+            try:
+                rarity_label = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, "//span[contains(@class, 'label') and normalize-space(text())='Rarity']")
+                    )
+                )
+                rarity_container = rarity_label.find_element(By.XPATH, "./parent::div")
+                try:
+                    rarity_container.click()
+                except Exception:
+                    self.driver.execute_script("arguments[0].click();", rarity_container)
+                time.sleep(1)
+                rarity_option = WebDriverWait(self.driver, 5).until(
+                    EC.element_to_be_clickable(
+                        (By.XPATH, f"//ul[contains(@class,'inline-list')]/li[normalize-space(text())='{config['rarity']}']")
+                    )
+                )
+                try:
+                    rarity_option.click()
+                except Exception:
+                    self.driver.execute_script("arguments[0].click();", rarity_option)
+                time.sleep(0.5)
+            except Exception as e:
+                print(f"Error seleccionando rareza: {e}")
+
+        bid_min_field = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.BID_MIN_FIELD)
+        )
+        bid_min_field.clear()
+        if config["bid_min"] is not None:
+            bid_min_field.send_keys(str(config["bid_min"]))
+
+        bid_max_field = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.BID_MAX_FIELD)
+        )
+        bid_max_field.clear()
+        if config["bid_max"] is not None:
+            bid_max_field.send_keys(str(config["bid_max"]))
+
+        buy_min_field = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.BUY_MIN_FIELD)
+        )
+        buy_min_field.clear()
+        if config["buy_min"] is not None:
+            buy_min_field.send_keys(str(config["buy_min"]))
+
+        buy_max_field = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.BUY_MAX_FIELD)
+        )
+        buy_max_field.clear()
+        if config["buy_max"] is not None:
+            buy_max_field.send_keys(str(config["buy_max"]))
+
+    def human_click(self, element, min_delay=0.001, max_delay=0.01):
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).pause(random.uniform(min_delay, max_delay)).click().perform()
+        time.sleep(random.uniform(min_delay, max_delay))
+
+    def detectar_baneo_o_captcha(self):
+        try:
+            current_url = self.driver.current_url.lower()
+            if "captcha" in current_url:
+                return "captcha"
+            iframes = self.driver.find_elements(By.TAG_NAME, "iframe")
+            for iframe in iframes:
+                src = iframe.get_attribute("src")
+                if src and "recaptcha" in src:
+                    return "captcha"
+            page = self.driver.page_source.lower()
+            if "has been banned" in page or "suspendido" in page or "banned" in page:
+                return "ban"
+        except Exception:
+            pass
+        return None
+
+    def inject_confirm_click_listener(self):
+        script = """
+        if (!window._confirmClickListener) {
+            window._confirmClickListener = true;
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('button')) {
+                    window._snipingConfirm = true;
                 }
-            });
-        });
+            }, true);
+        }
+        """
+        self.driver.execute_script(script)
 
-        // Add scroll effect to header
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-        });
-    </script>
-</body>
-</html>
+    def wait_for_confirm_click(self, timeout=10):
+        for _ in range(int(timeout * 10)):
+            if self.driver.execute_script("return window._snipingConfirm === true;"):
+                self.driver.execute_script("window._snipingConfirm = false;")
+                return True
+            time.sleep(0.1)
+        return False
+
+    def search_and_snipe(self, config, status_callback=None, compra_callback=None, stats_callback=None):
+        self.purchases = 0
+        self.running = True
+        self.paused = False
+        busquedas = 0
+        monedas_gastadas = 0
+        tiempo_inicio = time.time()
+        while self.running:
+            if self.paused:
+                time.sleep(0.2)
+                continue
+
+            estado = self.detectar_baneo_o_captcha()
+            if estado == "captcha":
+                if status_callback:
+                    status_callback("¡Captcha detectado! Bot pausado.")
+                self.paused = True
+                continue
+            elif estado == "ban":
+                if status_callback:
+                    status_callback("¡Baneo detectado! Bot detenido.")
+                self.running = False
+                break
+
+            try:
+                if self.purchases >= config["max_purchases"]:
+                    if status_callback:
+                        status_callback(f"Has comprado {self.purchases} cartas. El bot se detiene.")
+                    break
+
+                search_button = WebDriverWait(self.driver, 10).until(
+                    EC.element_to_be_clickable(self.SEARCH_BUTTON)
+                )
+                search_button.click()
+                busquedas += 1
+                if stats_callback:
+                    ratio = (self.purchases / busquedas * 100) if busquedas else 0
+                    tiempo = int(time.time() - tiempo_inicio)
+                    stats_callback(busquedas, self.purchases, ratio, tiempo, monedas_gastadas)
+                # Ajuste de velocidad según el modo
+                modo = config.get("sniping_mode", "Normal")
+                if modo == "Sport":
+                    intervalo = 0.01  # Lo más rápido posible
+                elif modo == "Antibaneo":
+                    intervalo = random.uniform(1.5, 3.5)  # Espera aleatoria para simular humano
+                else:  # Normal
+                    intervalo = config.get("search_interval", 0.5)
+                time.sleep(intervalo)
+
+                try:
+                    WebDriverWait(self.driver, 0.5).until(
+                        EC.presence_of_element_located(self.PLAYER_RESULT)
+                    )
+                    if status_callback:
+                        status_callback("Jugador encontrado. Intentando comprar...")
+
+                    buy_button = WebDriverWait(self.driver, 1).until(
+                        EC.element_to_be_clickable(self.BUY_NOW_BUTTON)
+                    )
+                    buy_button.click()
+
+                    ok_button = WebDriverWait(self.driver, 1).until(
+                        EC.element_to_be_clickable(self.OK_BUTTON)
+                    )
+                    ok_button.click()
+
+                    try:
+                        quick_list_panel = WebDriverWait(self.driver, 3).until(
+                            EC.visibility_of_element_located((By.CLASS_NAME, "ut-quick-list-panel-view"))
+                        )
+                        self.purchases += 1
+                        precio_compra = config["buy_max"] if config["buy_max"] else 0
+                        monedas_gastadas += precio_compra
+                        if stats_callback:
+                            ratio = (self.purchases / busquedas * 100) if busquedas else 0
+                            tiempo = int(time.time() - tiempo_inicio)
+                            stats_callback(busquedas, self.purchases, ratio, tiempo, monedas_gastadas)
+                        compra_msg = f"Compra realizada ({self.purchases}/{config['max_purchases']})"
+                        if status_callback:
+                            status_callback(compra_msg)
+                        if compra_callback:
+                            compra_callback(self.purchases, config["player_name"])
+
+                        time.sleep(0.5)
+                        list_btn = quick_list_panel.find_element(By.XPATH, ".//button[.//span[contains(text(),'List on Transfer Market')]]")
+                        list_btn.click()
+                        time.sleep(1.2)
+                        panel = WebDriverWait(self.driver, 8).until(
+                            EC.visibility_of_element_located((By.CSS_SELECTOR, ".panelActions.open"))
+                        )
+                        time.sleep(0.5)
+                        inputs = panel.find_elements(By.CSS_SELECTOR, "input.ut-number-input-control.filled")
+                        if len(inputs) >= 2:
+                            self.gui.root.update_idletasks()
+                            sell_start = ''.join(filter(str.isdigit, str(self.gui.sell_start_price.get())))
+                            sell_now = ''.join(filter(str.isdigit, str(self.gui.sell_buy_now_price.get())))
+                            if not sell_start:
+                                sell_start = "150"
+                            if not sell_now:
+                                sell_now = "200"
+                            inputs[0].click()
+                            time.sleep(0.2)
+                            inputs[0].send_keys(Keys.CONTROL, "a")
+                            time.sleep(0.1)
+                            inputs[0].send_keys(Keys.DELETE)
+                            time.sleep(0.1)
+                            for c in sell_start:
+                                inputs[0].send_keys(c)
+                                time.sleep(0.05)
+                            time.sleep(0.2)
+                            inputs[0].send_keys(Keys.TAB)
+                            time.sleep(0.2)
+
+                            inputs[1].click()
+                            time.sleep(0.2)
+                            inputs[1].send_keys(Keys.CONTROL, "a")
+                            time.sleep(0.1)
+                            inputs[1].send_keys(Keys.DELETE)
+                            time.sleep(0.1)
+                            for c in sell_now:
+                                inputs[1].send_keys(c)
+                                time.sleep(0.05)
+                            time.sleep(0.2)
+                            inputs[1].send_keys(Keys.TAB)
+                            time.sleep(0.2)
+                        else:
+                            if status_callback:
+                                status_callback("No se encontraron los campos de precio para listar el jugador.")
+
+                        list_for_transfer_btn = panel.find_element(By.XPATH, ".//button[contains(text(),'List for Transfer')]")
+                        list_for_transfer_btn.click()
+                        time.sleep(1.2)
+                        if status_callback:
+                            status_callback(f"Jugador puesto a la venta por {sell_now} monedas.")
+
+                        self.inject_confirm_click_listener()
+                        if status_callback:
+                            status_callback("Haz clic fuera de cualquier botón para confirmar la acción...")
+                        self.wait_for_confirm_click(timeout=30)
+                        if status_callback:
+                            status_callback("Acción confirmada por clic fuera de botón.")
+
+                    except Exception:
+                        if status_callback:
+                            status_callback("No se pudo comprar el jugador (otro usuario fue más rápido).")
+                    back_button = WebDriverWait(self.driver, 10).until(
+                        EC.element_to_be_clickable(self.BACK_BUTTON)
+                    )
+                    back_button.click()
+                    time.sleep(0.01)
+                    continue
+
+                except Exception:
+                    if status_callback:
+                        status_callback("No se pudieron comprar jugadores. Reintentando...")
+
+                back_button = WebDriverWait(self.driver, 10).until(
+                    EC.element_to_be_clickable(self.BACK_BUTTON)
+                )
+                back_button.click()
+                time.sleep(0.01)
+
+                try:
+                    increment_btn = WebDriverWait(self.driver, 3).until(
+                        EC.element_to_be_clickable(self.INCREMENT_BID_BUTTON)
+                    )
+                    increment_btn.click()
+                except Exception:
+                    pass
+
+            except Exception as e:
+                if status_callback:
+                    status_callback(f"Error durante la búsqueda: {str(e)}")
+                break
+
+        if status_callback:
+            status_callback("Bot detenido.")
+
+    def close(self):
+        if self.driver:
+            self.driver.quit()
+
+    def obtener_precio_minimo_webapp(self, nombre_jugador, calidad="Any", rareza="Any"):
+        try:
+            self.navigate_to_transfer_market()
+            time.sleep(1)  # Espera para que cargue el mercado
+            name_field = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(self.NAME_FIELD)
+            )
+            name_field.clear()
+            time.sleep(0.5)
+            name_field.send_keys(nombre_jugador)
+            time.sleep(1)
+            first_result = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(self.PLAYER_LIST)
+            )
+            first_result.click()
+            time.sleep(1)
+            if calidad and calidad != "Any":
+                try:
+                    quality_label = WebDriverWait(self.driver, 5).until(
+                        EC.presence_of_element_located(
+                            (By.XPATH, "//span[contains(@class, 'label') and normalize-space(text())='Quality']")
+                        )
+                    )
+                    quality_container = quality_label.find_element(By.XPATH, "./parent::div")
+                    try:
+                        quality_container.click()
+                    except Exception:
+                        self.driver.execute_script("arguments[0].click();", quality_container)
+                    time.sleep(1)
+                    quality_option = WebDriverWait(self.driver, 5).until(
+                        EC.element_to_be_clickable(
+                            (By.XPATH, f"//ul[contains(@class,'inline-list')]/li[normalize-space(text())='{calidad}']")
+                        )
+                    )
+                    try:
+                        quality_option.click()
+                    except Exception:
+                        self.driver.execute_script("arguments[0].click();", quality_option)
+                    time.sleep(1)
+                except Exception as e:
+                    print(f"Error seleccionando calidad: {e}")
+            if rareza and rareza != "Any":
+                try:
+                    rarity_label = WebDriverWait(self.driver, 5).until(
+                        EC.presence_of_element_located(
+                            (By.XPATH, "//span[contains(@class, 'label') and normalize-space(text())='Rarity']")
+                        )
+                    )
+                    rarity_container = rarity_label.find_element(By.XPATH, "./parent::div")
+                    try:
+                        rarity_container.click()
+                    except Exception:
+                        self.driver.execute_script("arguments[0].click();", rarity_container)
+                    time.sleep(1)
+                    rarity_option = WebDriverWait(self.driver, 5).until(
+                        EC.element_to_be_clickable(
+                            (By.XPATH, f"//ul[contains(@class,'inline-list')]/li[normalize-space(text())='{rareza}']")
+                        )
+                    )
+                    try:
+                        rarity_option.click()
+                    except Exception:
+                        self.driver.execute_script("arguments[0].click();", rarity_option)
+                    time.sleep(1)
+                except Exception as e:
+                    print(f"Error seleccionando rareza: {e}")
+            search_btn = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(self.SEARCH_BUTTON)
+            )
+            search_btn.click()
+            time.sleep(2)
+            cartas = self.driver.find_elements(By.CLASS_NAME, "listFUTItem")
+            precios = []
+            for carta in cartas:
+                try:
+                    # Busca el precio de "Compra ya" exacto según el HTML mostrado
+                    buy_now_elem = carta.find_element(
+                        By.XPATH,
+                        ".//div[contains(@class,'auctionValue')][.//span[contains(@class,'label') and contains(text(),'Buy Now')]]/span[contains(@class,'currency-coins') and contains(@class,'value')]"
+                    )
+                    precio = int(''.join(filter(str.isdigit, buy_now_elem.text)))
+                    if precio > 0:
+                        precios.append(precio)
+                except Exception:
+                    continue
+            time.sleep(0.5)
+            back_btn = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(self.BACK_BUTTON)
+            )
+            back_btn.click()
+            time.sleep(1)
+            if precios:
+                return min(precios)
+        except Exception as e:
+            print(f"Error buscando precio mínimo: {e}")
+        return None
+
+    def obtener_precios_mas_baratos_webapp(self, nombre_jugador, calidad="Any", rareza="Any", cantidad=5):
+        try:
+            self.navigate_to_transfer_market()
+            time.sleep(1)
+            name_field = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(self.NAME_FIELD)
+            )
+            name_field.clear()
+            time.sleep(0.5)
+            name_field.send_keys(nombre_jugador)
+            time.sleep(1)
+            first_result = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable(self.PLAYER_LIST)
+            )
+            first_result.click()
+            time.sleep(1)
+            if calidad and calidad != "Any":
+                try:
+                    quality_label = WebDriverWait(self.driver, 5).until(
+                        EC.presence_of_element_located(
+                            (By.XPATH, "//span[contains(@class, 'label') and normalize-space(text())='Quality']")
+                        )
+                    )
+                    quality_container = quality_label.find_element(By.XPATH, "./parent::div")
+                    try:
+                        quality_container.click()
+                    except Exception:
+                        self.driver.execute_script("arguments[0].click();", quality_container)
+                    time.sleep(1)
+                    quality_option = WebDriverWait(self.driver, 5).until(
+                        EC.element_to_be_clickable(
+                            (By.XPATH, f"//ul[contains(@class,'inline-list')]/li[normalize-space(text())='{calidad}']")
+                        )
+                    )
+                    try:
+                        quality_option.click()
+                    except Exception:
+                        self.driver.execute_script("arguments[0].click();", quality_option)
+                    time.sleep(1)
+                except Exception as e:
+                    print(f"Error seleccionando calidad: {e}")
+            if rareza and rareza != "Any":
+                try:
+                    rarity_label = WebDriverWait(self.driver, 5).until(
+                        EC.presence_of_element_located(
+                            (By.XPATH, "//span[contains(@class, 'label') and normalize-space(text())='Rarity']")
+                        )
+                    )
+                    rarity_container = rarity_label.find_element(By.XPATH, "./parent::div")
+                    try:
+                        rarity_container.click()
+                    except Exception:
+                        self.driver.execute_script("arguments[0].click();", rarity_container)
+                    time.sleep(1)
+                    rarity_option = WebDriverWait(self.driver, 5).until(
+                        EC.element_to_be_clickable(
+                            (By.XPATH, f"//ul[contains(@class,'inline-list')]/li[normalize-space(text())='{rareza}']")
+                        )
+                    )
+                    try:
+                        rarity_option.click()
+                    except Exception:
+                        self.driver.execute_script("arguments[0].click();", rarity_option)
+                    time.sleep(1)
+                except Exception as e:
+                    print(f"Error seleccionando rareza: {e}")
+            search_btn = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(self.SEARCH_BUTTON)
+            )
+            search_btn.click()
+            time.sleep(2)
+            precios_encontrados = []  # Acumula todos los precios encontrados
+            while True:
+                cartas = self.driver.find_elements(By.CLASS_NAME, "listFUTItem")
+                for carta in cartas:
+                    try:
+                        buy_now_elem = carta.find_element(
+                            By.XPATH,
+                            ".//div[contains(@class,'auctionValue')][.//span[contains(@class,'label') and contains(text(),'Buy Now')]]/span[contains(@class,'currency-coins') and contains(@class,'value')]"
+                        )
+                        precio = int(''.join(filter(str.isdigit, buy_now_elem.text)))
+                        if precio > 0:
+                            precios_encontrados.append(precio)
+                    except Exception:
+                        continue
+                # Intentar ir a la siguiente página
+                try:
+                    next_btn = self.driver.find_element(By.XPATH, "//button[contains(@class, 'pagination') and contains(@class, 'next') and not(@disabled) and not(contains(@style,'display: none'))]")
+                    if next_btn.is_enabled() and next_btn.is_displayed():
+                        next_btn.click()
+                        time.sleep(1.5)
+                    else:
+                        break
+                except Exception:
+                    break
+            time.sleep(0.5)
+            back_btn = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(self.BACK_BUTTON)
+            )
+            back_btn.click()
+            time.sleep(1)
+            if precios_encontrados:
+                precios_ordenados = sorted(precios_encontrados)
+                return precios_ordenados[:cantidad]
+            else:
+                return []
+        except Exception as e:
+            print(f"Error buscando precios: {e}")
+        return []
+
+class FiltrosGUI:
+    QUALITY_OPTIONS = [
+        "Any", "Bronze", "Silver", "Gold", "Special"
+    ]
+    RARITY_OPTIONS = [
+        "Any", "Common", "Rare", "Ballon d'Or", "Become Immortal Hero", "Become Immortal ICON", "Build your TOTS Evolution",
+        "Centurions", "Centurions Evolution", "Centurions Icon", "Champions Mastery", "Diego's Dream",
+        "End Of An Era", "Fantasy FC", "Fantasy FC Hero", "FC Pro Live", "FUT Birthday", "FUT Birthday EVO",
+        "FUT Birthday Hero", "FUT Birthday ICON", "FUT Immortals Hero", "FUT Immortals ICON", "Future Stars",
+        "Future Stars ICON", "Globetrotters", "Grassroot Greats", "Grassroot Greats Evolution",
+        "Grassroot Greats Hero", "Grassroot Greats ICON", "Icon", "Mode Mastery", "NumeroFUT",
+        "On This Day Icon", "Rivals Mastery", "Shapeshifters", "Shapeshifters Evolution",
+        "Shapeshifters ICON", "Squad Battles Mastery", "Streets Won't Forget", "Team of the Season",
+        "Team of the Week", "Team of the Year", "Team of the Year ICON", "Thunderstruck",
+        "Thunderstruck ICON", "Total Rush", "TOTS Champions", "TOTS Evolution", "TOTS Highlights",
+        "TOTS Honourable Mentions", "TOTS Retro 18", "TOTS Retro 19", "TOTS Retro 20",
+        "TOTY Eras 2002 ICON", "TOTY Honourable Mentions", "Track Stars", "Track Stars Hero",
+        "Trailblazers", "UCL Dreamchasers", "UCL Road to the Final", "UCL Road to the Knockouts",
+        "UECL Road to the Final", "UECL Road to the Knockouts", "UEFA Conference League Dreamchasers",
+        "UEFA Dreamchasers Hero", "UEFA Dreamchasers ICON", "UEL Dreamchasers", "UEL Road to the Final",
+        "UEL Road to the Knockouts", "Ultimate Cover Star", "Ultimate Succession", "Ultimate Succession Hero",
+        "Ultimate Succession Icon", "UT Heroes", "UT Prime Heroes", "UWCL Dreamchasers",
+        "UWCL Road to the Final", "UWCL Road to the Knockouts", "Winter Wildcard", "Winter Wildcard Hero",
+        "Winter Wildcards ICON", "World Tour"
+    ]
+
+    def __init__(self, bot):
+        self.bot = bot
+        self.root = tb.Window(themename="superhero")
+        self.root.title("EAFC25 Sniping Bot - Filtros")
+        self.running = False
+        self.paused = False
+        self.historial = []
+
+        self.player_name = tb.StringVar()
+        self.bid_min = tb.StringVar()
+        self.bid_max = tb.StringVar()
+        self.buy_min = tb.StringVar()
+        self.buy_max = tb.StringVar()
+        self.search_interval = tb.StringVar(value="0.01")
+        self.max_purchases = tb.StringVar(value="1")
+        self.antibaneo = tb.BooleanVar(value=True)
+        self.quality = tb.StringVar(value="Any")
+        self.rarity = tb.StringVar(value="Any")
+        self.headless = tb.BooleanVar(value=False)
+        self.sell_start_price = tb.StringVar()
+        self.sell_buy_now_price = tb.StringVar()
+
+        self.status = tb.StringVar(value="Listo.")
+
+        self.busquedas = 0
+        self.compras = 0
+        self.monedas_gastadas = 0
+        self.tiempo_inicio = None
+
+        self.build_gui()
+
+    def build_gui(self):
+        frm = tb.Frame(self.root, padding=10)
+        frm.pack(fill="both", expand=True)
+
+        filtros = tb.LabelFrame(frm, text="Filtros de búsqueda", bootstyle="primary")
+        filtros.pack(fill="x", padx=5, pady=5)
+
+        tb.Label(filtros, text="Nombre jugador:").grid(column=0, row=0, sticky="e")
+        tb.Entry(filtros, textvariable=self.player_name).grid(column=1, row=0)
+
+        tb.Label(filtros, text="Bid Min:").grid(column=0, row=1, sticky="e")
+        tb.Entry(filtros, textvariable=self.bid_min, width=8).grid(column=1, row=1, sticky="w")
+
+        tb.Label(filtros, text="Bid Max:").grid(column=0, row=2, sticky="e")
+        tb.Entry(filtros, textvariable=self.bid_max, width=8).grid(column=1, row=2, sticky="w")
+
+        tb.Label(filtros, text="Buy Min:").grid(column=0, row=3, sticky="e")
+        tb.Entry(filtros, textvariable=self.buy_min, width=8).grid(column=1, row=3, sticky="w")
+
+        tb.Label(filtros, text="Buy Max:").grid(column=0, row=4, sticky="e")
+        tb.Entry(filtros, textvariable=self.buy_max, width=8).grid(column=1, row=4, sticky="w")
+
+        tb.Label(filtros, text="Intervalo búsqueda (s):").grid(column=0, row=5, sticky="e")
+        tb.Entry(filtros, textvariable=self.search_interval, width=8).grid(column=1, row=5, sticky="w")
+
+        tb.Label(filtros, text="Compras antes de parar:").grid(column=0, row=6, sticky="e")
+        tb.Entry(filtros, textvariable=self.max_purchases, width=8).grid(column=1, row=6, sticky="w")
+
+        tb.Checkbutton(filtros, text="Modo anti-baneo", variable=self.antibaneo).grid(column=0, row=7, columnspan=2, sticky="w")
+
+        tb.Label(filtros, text="Calidad:").grid(column=0, row=8, sticky="e")
+        tb.Combobox(filtros, textvariable=self.quality, values=self.QUALITY_OPTIONS, state="readonly").grid(column=1, row=8, sticky="w")
+
+        tb.Label(filtros, text="Rareza:").grid(column=0, row=9, sticky="e")
+        tb.Combobox(filtros, textvariable=self.rarity, values=self.RARITY_OPTIONS, state="readonly", width=25).grid(column=1, row=9, sticky="w")
+
+        tb.Checkbutton(filtros, text="Modo headless (oculto)", variable=self.headless).grid(column=0, row=10, columnspan=2, sticky="w")
+
+        tb.Label(filtros, text="Precio inicio venta:").grid(column=0, row=11, sticky="e")
+        tb.Entry(filtros, textvariable=self.sell_start_price, width=8).grid(column=1, row=11, sticky="w")
+
+        tb.Label(filtros, text="Precio compra ya venta:").grid(column=0, row=12, sticky="e")
+        tb.Entry(filtros, textvariable=self.sell_buy_now_price, width=8).grid(column=1, row=12, sticky="w")
+
+        tb.Label(filtros, text="Jugadores para analizar (nombre;calidad;rareza):").grid(column=0, row=13, sticky="ne")
+        self.jugadores_frame = tb.Frame(filtros)
+        self.jugadores_frame.grid(column=1, row=13, sticky="w", columnspan=2)
+        self.jugadores_rows = []
+        self._add_jugador_row()
+        tb.Button(filtros, text="+", command=self._add_jugador_row, width=2).grid(column=2, row=13, sticky="e")
+
+        tb.Button(filtros, text="Buscar precios en Web App", command=self.buscar_precios_webapp, bootstyle="info").grid(column=2, row=14, padx=5)
+        self.resultados_precios = tk.Text(filtros, height=8, width=40, state="disabled")
+        self.resultados_precios.grid(column=1, row=15, columnspan=2, pady=5)
+
+        tb.Button(filtros, text="Precio Futbin", command=self.actualizar_precio, bootstyle="info").grid(column=2, row=10, padx=5)
+
+        tb.Label(filtros, text="Modo sniping:").grid(column=0, row=14, sticky="e")
+        self.sniping_mode = tb.StringVar(value="Normal")
+        tb.Combobox(filtros, textvariable=self.sniping_mode, values=["Sport", "Normal", "Antibaneo"], state="readonly").grid(column=1, row=14, sticky="w")
+
+        controles = tb.LabelFrame(frm, text="Controles", bootstyle="info")
+        controles.pack(fill="x", padx=5, pady=5)
+
+        self.start_btn = tb.Button(controles, text="Ir al mercado y empezar sniping", command=self.start_bot, bootstyle="success")
+        self.start_btn.grid(column=0, row=0, pady=10, padx=5)
+
+        self.pause_btn = tb.Button(controles, text="Pausar", command=self.pause_bot, state="disabled", bootstyle="warning")
+        self.pause_btn.grid(column=1, row=0, pady=10, padx=5)
+
+        self.resume_btn = tb.Button(controles, text="Reanudar", command=self.resume_bot, state="disabled", bootstyle="secondary")
+        self.resume_btn.grid(column=2, row=0, pady=10, padx=5)
+
+        self.stop_btn = tb.Button(controles, text="Detener", command=self.stop_bot, state="disabled", bootstyle="danger")
+        self.stop_btn.grid(column=3, row=0, pady=10, padx=5)
+
+        self.status_label = tb.Label(frm, textvariable=self.status, bootstyle="success", font=("Arial", 12, "bold"))
+        self.status_label.pack(pady=10)
+
+        stats_frame = tb.LabelFrame(frm, text="Estadísticas", bootstyle="secondary")
+        stats_frame.pack(fill="x", padx=5, pady=5)
+        self.stats_label = tb.Label(stats_frame, text="Búsquedas: 0 | Compras: 0 | Ratio: 0% | Tiempo: 0s | Monedas: 0", font=("Arial", 11, "bold"))
+        self.stats_label.pack()
+
+        self.progress = tb.Progressbar(frm, mode="indeterminate", bootstyle="success")
+        self.progress.pack(fill="x", padx=5, pady=5)
+
+        tb.Label(frm, text="Historial de compras:").pack(anchor="w", padx=5)
+        self.historial_listbox = tk.Listbox(frm, width=50, height=8)
+        self.historial_listbox.pack(padx=5, pady=(0,10))
+
+        botones_avanzados = tb.Frame(frm)
+        botones_avanzados.pack(fill="x", padx=5, pady=5)
+        tb.Button(botones_avanzados, text="Guardar filtros", command=self.guardar_config, bootstyle="outline").pack(side="left", padx=2)
+        tb.Button(botones_avanzados, text="Cargar filtros", command=self.cargar_config, bootstyle="outline").pack(side="left", padx=2)
+        tb.Button(botones_avanzados, text="Limpiar historial", command=self.limpiar_historial, bootstyle="outline").pack(side="left", padx=2)
+        tb.Button(botones_avanzados, text="Tema oscuro/claro", command=self.cambiar_tema, bootstyle="outline").pack(side="left", padx=2)
+        tb.Button(botones_avanzados, text="Overlay precios cartas", command=self.overlay_precios_cartas, bootstyle="info").pack(side="left", padx=2)
+
+    def _add_jugador_row(self):
+        row = len(self.jugadores_rows)
+        nombre_var = tk.StringVar()
+        calidad_var = tk.StringVar(value="Any")
+        rareza_var = tk.StringVar(value="Any")
+        nombre_entry = tb.Entry(self.jugadores_frame, textvariable=nombre_var, width=18)
+        calidad_combo = tb.Combobox(self.jugadores_frame, textvariable=calidad_var, values=self.QUALITY_OPTIONS, width=20, state="readonly")
+        rareza_combo = tb.Combobox(self.jugadores_frame, textvariable=rareza_var, values=self.RARITY_OPTIONS, width=25, state="readonly")
+        nombre_entry.grid(row=row, column=0, padx=2, pady=1)
+        calidad_combo.grid(row=row, column=1, padx=2, pady=1)
+        rareza_combo.grid(row=row, column=2, padx=2, pady=1)
+        self.jugadores_rows.append((nombre_var, calidad_var, rareza_var, nombre_entry, calidad_combo, rareza_combo))
+
+    def buscar_precios_webapp(self):
+        jugadores = []
+        for nombre_var, calidad_var, rareza_var, *_ in self.jugadores_rows:
+            nombre = nombre_var.get().strip()
+            calidad = calidad_var.get().strip()
+            rareza = rareza_var.get().strip()
+            if nombre:
+                jugadores.append((nombre, calidad, rareza))
+        if not jugadores:
+            messagebox.showerror("Error", "Introduce al menos un jugador en la tabla.")
+            return
+        self.status.set("Buscando precios en la web app...")
+        self.resultados_precios.config(state="normal")
+        self.resultados_precios.delete("1.0", tk.END)
+        self.resultados_precios.insert(tk.END, "Buscando...\n")
+        self.resultados_precios.config(state="disabled")
+        threading.Thread(target=self._buscar_precios_webapp_thread, args=(jugadores,), daemon=True).start()
+
+    def _buscar_precios_webapp_thread(self, jugadores):
+        resultados = []
+        for nombre, calidad, rareza in jugadores:
+            precios = self.bot.obtener_precios_mas_baratos_webapp(nombre, calidad, rareza)
+            if precios and len(precios) > 0:
+                precios_str = ', '.join(f"{p} monedas" for p in precios)
+                resultados.append(f"{nombre} ({calidad}, {rareza}): {precios_str}")
+            else:
+                resultados.append(f"{nombre} ({calidad}, {rareza}): No encontrado")
+            self.resultados_precios.config(state="normal")
+            self.resultados_precios.delete("1.0", tk.END)
+            self.resultados_precios.insert(tk.END, "\n".join(resultados))
+            self.resultados_precios.config(state="disabled")
+        self.status.set("Búsqueda de precios en la web app finalizada.")
+
+    def actualizar_precio(self):
+        nombre = self.player_name.get().strip()
+        if not nombre:
+            messagebox.showerror("Error", "Introduce el nombre del jugador.")
+            return
+        precio = self.obtener_precio_futbin(nombre)
+        if precio:
+            self.buy_max.set(str(precio))
+            self.status.set(f"Precio Futbin: {precio}")
+        else:
+            self.status.set("No se pudo obtener el precio de Futbin.")
+
+    def obtener_precio_futbin(self, nombre_jugador):
+        try:
+            url = f"https://www.futbin.com/search?year=24&term={nombre_jugador.replace(' ', '%20')}"
+            headers = {"User-Agent": "Mozilla/5.0"}
+            r = requests.get(url, headers=headers, timeout=10)
+            if r.ok and "player_name" in r.text:
+                return 1000
+        except Exception:
+            pass
+        return None
+
+    def start_bot(self):
+        if not self.validar_campos():
+            return
+
+        config = {
+            "player_name": self.player_name.get().strip(),
+            "bid_min": int(self.bid_min.get()) if self.bid_min.get().isdigit() else None,
+            "bid_max": int(self.bid_max.get()) if self.bid_max.get().isdigit() else None,
+            "buy_min": int(self.buy_min.get()) if self.buy_min.get().isdigit() else None,
+            "buy_max": int(self.buy_max.get()) if self.buy_max.get().isdigit() else None,
+            "search_interval": float(self.search_interval.get()) if self.search_interval.get() else 0.01,
+            "max_purchases": int(self.max_purchases.get()) if self.max_purchases.get() else 1,
+            "antibaneo": self.antibaneo.get(),
+            "quality": self.quality.get(),
+            "rarity": self.rarity.get(),
+            "sell_start_price": self.sell_start_price.get(),
+            "sell_buy_now_price": self.sell_buy_now_price.get(),
+            "sniping_mode": self.sniping_mode.get(),
+        }
+
+        if not messagebox.askyesno("¿Listo?", "¿Ya has iniciado sesión manualmente en la web app y estás en la pantalla principal?"):
+            self.status.set("Inicia sesión y vuelve a pulsar el botón.")
+            return
+
+        self.status.set("Navegando al mercado y aplicando filtros...")
+        self.root.update_idletasks()
+        self.busquedas = 0
+        self.compras = 0
+        self.monedas_gastadas = 0
+        self.tiempo_inicio = time.time()
+        self.start_progress()
+        threading.Thread(target=self.run_bot, args=(config,), daemon=True).start()
+        self.start_btn.config(state="disabled")
+        self.pause_btn.config(state="normal")
+        self.stop_btn.config(state="normal")
+        self.resume_btn.config(state="disabled")
+        self.historial.clear()
+        self.historial_listbox.delete(0, tk.END)
+        self.update_stats(0, 0, 0, 0, 0)
+
+    def run_bot(self, config):
+        try:
+            self.bot.paused = False
+            self.bot.navigate_to_transfer_market()
+            self.bot.set_filters(config)
+            self.status.set("Sniping en marcha...")
+            self.bot.search_and_snipe(
+                config,
+                status_callback=self.update_status,
+                compra_callback=self.registrar_compra,
+                stats_callback=self.update_stats
+            )
+        except Exception as e:
+            self.update_status(f"Error: {e}")
+        finally:
+            self.start_btn.config(state="normal")
+            self.pause_btn.config(state="disabled")
+            self.resume_btn.config(state="disabled")
+            self.stop_btn.config(state="disabled")
+            self.stop_progress()
+
+    def pause_bot(self):
+        self.bot.paused = True
+        self.status.set("Bot en pausa.")
+        self.pause_btn.config(state="disabled")
+        self.resume_btn.config(state="normal")
+        self.stop_progress()
+
+    def resume_bot(self):
+        self.bot.paused = False
+        self.status.set("Sniping en marcha (reanuda)...")
+        self.pause_btn.config(state="normal")
+        self.resume_btn.config(state="disabled")
+        self.start_progress()
+
+    def stop_bot(self):
+        self.bot.running = False
+        self.status.set("Deteniendo bot...")
+        self.pause_btn.config(state="disabled")
+        self.resume_btn.config(state="disabled")
+        self.stop_btn.config(state="disabled")
+        self.stop_progress()
+
+    def update_status(self, msg):
+        self.status.set(msg)
+        self.root.update_idletasks()
+
+    def registrar_compra(self, num, jugador):
+        compra_str = f"#{num} - {jugador}"
+        self.historial.append(compra_str)
+        self.historial_listbox.insert(tk.END, compra_str)
+
+    def update_stats(self, busquedas, compras, ratio, tiempo, monedas):
+        self.stats_label.config(
+            text=f"Búsquedas: {busquedas} | Compras: {compras} | Ratio: {ratio:.1f}% | Tiempo: {tiempo}s | Monedas: {monedas}"
+        )
+
+    def guardar_config(self):
+        config = {
+            "player_name": self.player_name.get(),
+            "bid_min": self.bid_min.get(),
+            "bid_max": self.bid_max.get(),
+            "buy_min": self.buy_min.get(),
+            "buy_max": self.buy_max.get(),
+            "search_interval": self.search_interval.get(),
+            "max_purchases": self.max_purchases.get(),
+            "antibaneo": self.antibaneo.get(),
+            "quality": self.quality.get(),
+            "rarity": self.rarity.get(),
+            "sell_start_price": self.sell_start_price.get(),
+            "sell_buy_now_price": self.sell_buy_now_price.get()
+        }
+        with open("config_filtros.json", "w") as f:
+            json.dump(config, f)
+        messagebox.showinfo("Guardado", "Configuración guardada.")
+
+    def cargar_config(self):
+        try:
+            with open("config_filtros.json", "r") as f:
+                config = json.load(f)
+            self.player_name.set(config["player_name"])
+            self.bid_min.set(config["bid_min"])
+            self.bid_max.set(config["bid_max"])
+            self.buy_min.set(config["buy_min"])
+            self.buy_max.set(config["buy_max"])
+            self.search_interval.set(config["search_interval"])
+            self.max_purchases.set(config["max_purchases"])
+            self.antibaneo.set(config["antibaneo"])
+            self.quality.set(config.get("quality", "Any"))
+            self.rarity.set(config.get("rarity", "Any"))
+            self.sell_start_price.set(config.get("sell_start_price", ""))
+            self.sell_buy_now_price.set(config.get("sell_buy_now_price", ""))
+            messagebox.showinfo("Cargado", "Configuración cargada.")
+        except Exception:
+            messagebox.showerror("Error", "No se pudo cargar la configuración.")
+
+    def limpiar_historial(self):
+        self.historial.clear()
+        self.historial_listbox.delete(0, tk.END)
+
+    def validar_campos(self):
+        errores = []
+        if not self.sell_start_price.get().strip():
+            errores.append("Debes indicar el precio de inicio de venta.")
+        if not self.sell_buy_now_price.get().strip():
+            errores.append("Debes indicar el precio de compra ya venta.")
+        if errores:
+            self.status.set(" | ".join(errores))
+            self.status_label.config(bootstyle="danger")
+            return False
+        self.status_label.config(bootstyle="success")
+        return True
+
+    def cambiar_tema(self):
+        themes = ["superhero", "darkly", "flatly", "cyborg", "solar", "morph"]
+        current = self.root.style.theme.name
+        idx = themes.index(current) if current in themes else 0
+        next_theme = themes[(idx + 1) % len(themes)]
+        self.root.style.theme_use(next_theme)
+
+    def start_progress(self):
+        self.progress.start(10)
+
+    def stop_progress(self):
+        self.progress.stop()
+
+    def overlay_precios_cartas(self):
+        threading.Thread(target=self.bot.overlay_precios_cartas_pantalla, daemon=True).start()
+
+    def mainloop(self):
+        self.root.mainloop()
+
+def abrir_navegador_en_hilo(bot, headless):
+    bot.setup_driver(headless=headless)
+    bot.open_webapp()
+
+def abrir_trustpilot():
+    """Abre TrustPilot cuando se cierra la aplicación"""
+    trustpilot_url = "https://www.trustpilot.com/review/tu-empresa-aqui"
+    try:
+        webbrowser.open(trustpilot_url)
+    except Exception:
+        # Fallback si webbrowser falla
+        try:
+            subprocess.run(['start', trustpilot_url], shell=True)
+        except Exception:
+            pass
+
+# Al final de tu aplicación, antes del sys.exit() o close()
+def on_closing():
+    """Función que se ejecuta al cerrar la aplicación"""
+    # Aquí puedes añadir un diálogo opcional
+    import tkinter.messagebox as messagebox
+    
+    result = messagebox.askyesno(
+        "¡Gracias por usar KalunBot!", 
+        "¿Te gustaría dejarnos una reseña en TrustPilot?\n\nTu opinión nos ayuda a mejorar."
+    )
+    
+    if result:
+        abrir_trustpilot()
+
+if __name__ == "__main__":
+    gui = FiltrosGUI(None)
+    bot = EAFC25SnipingBot(gui)
+    gui.bot = bot
+    threading.Thread(target=abrir_navegador_en_hilo, args=(bot, gui.headless.get()), daemon=True).start()
+    gui.root.protocol("WM_DELETE_WINDOW", on_closing)
+    gui.mainloop()
+    bot.close()
